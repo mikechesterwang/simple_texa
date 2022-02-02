@@ -76,6 +76,8 @@ async function start(){
 }
 
 async function end(){
+    checkList = [];
+    document.getElementById("selected-player").innerHTML = `<h5>已选中赢家：${checkList.toString()}</h5>`
     await get(`/end?winner=${checkList.toString()}`);
 }
 
