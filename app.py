@@ -21,7 +21,7 @@ class Player:
         self.name = name
         self.card = []
         self.credit = 0
-        self.balance = 360
+        self.balance = 2720
         self.current_bet = 0
         self.is_discard = False
         self.show_card = False
@@ -49,8 +49,8 @@ class Player:
         self.is_discard = True
     
     def reset(self):
-        self.credit += (self.balance - 360)
-        self.balance = 360
+        self.credit += (self.balance - 2720)
+        self.balance = 2720
 
 START = "进行中"
 END = "结束"
