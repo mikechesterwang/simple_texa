@@ -84,16 +84,16 @@ class Game:
         self.players = new_list
 
     def ping(self, name):
-        # now = time.time()
-        # in_list = False
-        # for player in self.players:
-        #     if now - player.last_ping > 10:
-        #         self.remove_player(player.name)
-        #     if player.name == name:
-        #         in_list = True
-        #         player.last_ping = now
-        # if not in_list:
-        #     return {"success": False}
+        now = time.time()
+        in_list = False
+        for player in self.players:
+            # if now - player.last_ping > 10:
+            #     self.remove_player(player.name)
+            if player.name == name:
+                in_list = True
+                player.last_ping = now
+        if not in_list:
+            return {"success": False}
         return {"success": True}
                 
     def get_player(self, name):

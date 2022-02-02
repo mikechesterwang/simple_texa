@@ -115,10 +115,10 @@ setInterval(async () => {
         document.getElementById("status-info").innerHTML = `<h3 style="color: red;">您的网络连接出现异常</h3>`;
     }
 
-    // var ping = await get(`/ping?username=${username}`);
-    // if (!ping.success) {
-    //     window.location.href = "/login";
-    // }
+    var ping = await get(`/ping?username=${username}`);
+    if (!ping.success) {
+        window.location.href = "/login";
+    }
 
     var gameState = await get('/game_state');
     document.getElementById("game-state").innerHTML = `<h3>游戏状态：${gameState.state}</h3>`
