@@ -9,6 +9,9 @@ async function get(url) {
     var res = await fetch(url);
     var rtn = await res.json();
     console.log(url, rtn);
+    if( ! rtn.success){
+        document.getElementById("message").innerHTML = `<div>提示消息：<span style="color: red">${rtn.msg}</span></div>`;
+    }
     return rtn;
 }
 
@@ -27,6 +30,19 @@ const ts = (p) => {
     return s;
 }
 
+const isCardEqual = (c, d) => {
+    var s1 = "";
+    for (let card of c) {
+        s1 += card;
+    }
+    var s2 = "";
+    for (let card of d) {
+        s2 += card;
+    }
+    console.log(s1, s2);
+    return s1 === s2;
+}
+
 const isEqual = (p1, p2) => {
     return ts(p1) === ts(p2);
 }
@@ -38,7 +54,7 @@ setInterval(async () => {
 
         // cards
         var cards = (await get("/showing_card")).card;
-        if (cards.length > lastCards.length) {
+        if ( ! isCardEqual(cards, lastCards)) {
             lastCards = cards;
             var cardHtml = "";
             let cnt = 0;
@@ -55,7 +71,7 @@ setInterval(async () => {
         // player
         var players = (await get("/player_info")).players;
         console.log(playerCache.toString());
-        if ( ! isEqual(players, playerCache)) {
+        if (!isEqual(players, playerCache)) {
             playerCache = players;
 
             var playerHtml = "<table><tr><th>用户名</th><th>总积分</th><th>当轮剩余筹码</th><th>手牌</th><th>当前下注</th><th>状态</th><th>操作</th></tr>";
@@ -103,5 +119,8 @@ setInterval(async () => {
     if (!ping.success) {
         window.location.href = "/login";
     }
+
+    var gameState = await get('/game_state');
+    document.getElementById("game-state").innerHTML = `<h3>游戏状态：${gameState.state}</h3>`
 
 }, 2000);

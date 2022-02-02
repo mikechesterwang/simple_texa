@@ -1,10 +1,6 @@
-from multiprocessing import pool
-from os import remove
 import random
 from flask import request, redirect, Flask, render_template
 import time
-import json
-
 app = Flask(__name__)
          
 card_group = ["spade", "plum", "square", "heart"]
@@ -66,8 +62,10 @@ class Game:
         self.state = END
         self.code = "hdnb"
         self.card_pool = []
+        self.hash = time.time()
 
     def join(self, name, code):
+        print(self.hash)
         if self.state == START:
             return {"success": False, "msg": "当前正在进行中，请稍后加入"}
         if self.code != code:
@@ -140,6 +138,18 @@ class Game:
     def reset(self):
         for p in self.players:
             p.reset()
+
+class ChatRoom:
+    def __init__(self):
+        self.last_message = ""
+        self.message_cache = []
+        self.cnt = 0
+    
+    def _add_message(self, content):
+        self.cnt += 1
+    
+    def send(self, content):
+        pass
         
     
 game = Game()
@@ -153,6 +163,7 @@ def index():
 
 @app.route("/login")
 def login():
+    print("?")
     return render_template('login.html')
 
 @app.route("/showing_card")
@@ -224,8 +235,7 @@ def next():
 def end():
     winnerRaw = request.args.get("winner")
     ps = winnerRaw.split(",")
-    
-    if len(ps) == 0:
+    if len(ps) == 0 or winnerRaw == '':
         return {"success": False, "msg": "必须选择至少一个赢家"}
     
     pool_balance = 0
@@ -242,10 +252,15 @@ def end():
     for name in ps:
         p = game.get_player(name)
         p.win(pool_balance / len(ps))
-        
+    game.state = END
+    print(game.hash)
     return {"success": True}
 
 @app.route("/reset")
 def reset():
     game.reset()
     return {"success": True}
+
+@app.route("/game_state")
+def game_state():
+    return {"success": True, "state": game.state}
