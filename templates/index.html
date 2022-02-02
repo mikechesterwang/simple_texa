@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>李记德州</title>
+    </head>
+    <body>
+        <script type="text/javascript" src="/static/js/control.js"></script>
+        <div>
+            <div id="title">
+            </div>
+            <div id="status-info">
+            </div>
+            <div id="player-info">
+            </div>
+            <div id="showing-card">
+            </div>
+            <div id="control-pane">
+                <input id="current-add" />
+                <button onclick="discard()">弃牌</button>
+                <button onclick="add(10)">+10</button>
+                <button onclick="add(20)">+20</button>
+                <button onclick="add(50)">+50</button>
+                <button onclick="add(100)">+100</button>
+                <button onclick="add(500)">+500</button>
+                <button onclick="clearCurrent()">清空</button>
+                <button onclick="confirmCurrent()">确定加注</button>
+            </div>
+            <h3>我的手牌</h3>
+            <button onclick="show()">展示</button>
+            <div id="my-card">
+            </div>
+            
+            <div id="admin-pane" style="margin-top: 100px;">
+                <h3>发牌员按钮</h3>
+                <div id="selected-player"></div>
+                <button onclick="next()">翻牌</button>
+                <button onclick="start()">开始</button>
+                <button onclick="end()">结束</button>
+                <button onclick="reset()">重置筹码</button>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="/static/js/index.js"></script>
+    </body>
+</html>
