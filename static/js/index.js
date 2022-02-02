@@ -74,7 +74,7 @@ setInterval(async () => {
         if (!isEqual(players, playerCache)) {
             playerCache = players;
 
-            var playerHtml = "<table><tr><th>用户名</th><th>总积分</th><th>当轮剩余筹码</th><th>手牌</th><th>当前下注</th><th>状态</th><th>操作</th></tr>";
+            var playerHtml = "<table><tr><th>用户名</th><th>总积分</th><th>当轮剩余筹码</th><th>手牌</th><th>当前下注</th><th>状态</th><th>操作</th><th>踢出</th></tr>";
             let index = 0;
             for (let player of players) {
 
@@ -90,7 +90,7 @@ setInterval(async () => {
 
                 playerHtml += `<tr><td>${player.name}</td><td>${player.credit}</td><td>${player.balance}</td>
                 <td>${playerCardHtml}</td>
-                <td>${player.current_bet}</td><td>${player.is_discard ? '<span style="color: red">弃牌</span>' : ''}</td><td> <input id="player-${index}" type="checkbox" onclick="check(${index}, '${player.name}')"/> </td></tr>`
+                <td>${player.current_bet}</td><td>${player.is_discard ? '<span style="color: red">弃牌</span>' : ''}</td><td> <input id="player-${index}" type="checkbox" onclick="check(${index}, '${player.name}')"/></td><td><button onclick="remove('${player.name}')">踢出</button></td></tr>`
 
                 index++;
             }
@@ -122,5 +122,8 @@ setInterval(async () => {
 
     var gameState = await get('/game_state');
     document.getElementById("game-state").innerHTML = `<h3>游戏状态：${gameState.state}</h3>`
+
+
+    
 
 }, 2000);

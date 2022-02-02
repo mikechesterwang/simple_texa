@@ -86,3 +86,7 @@ async function next(){
 async function reset(){
     await get("/reset")
 }
+
+async function remove(username){
+    await get(`/remove?username=${username}`)
+}

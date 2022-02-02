@@ -264,3 +264,9 @@ def reset():
 @app.route("/game_state")
 def game_state():
     return {"success": True, "state": game.state}
+
+@app.route("/remove")
+def remove():
+    username = request.args.get("username")
+    game.remove_player(username)
+    return {"success": True}
